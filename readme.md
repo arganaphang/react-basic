@@ -3,7 +3,7 @@
 ## Requirement
 
 - NodeJS v16++
-  > I use Volta.sh for installing NodeJS which is supporting multiple version of NodeJS and use pnpm.io for dependency management
+  > I use Volta.sh for install NodeJS which is supporting multiple version of NodeJS and use pnpm.io for dependency management
 - Visual Studio Code
 - Figma
 - Git
