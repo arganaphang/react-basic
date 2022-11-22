@@ -13,6 +13,26 @@
 - Terminal (Bash, Zsh, Fish)
   > I use Fish Shell, another recommendation is zsh shell
 
+## How to run this Project
+
+- Install dependencies
+
+```shell
+$ pnpm install
+```
+
+- Run Dev Server
+
+```shell
+$ pnpm run dev
+```
+
+- Run Test
+
+```shell
+$ pnpm run test
+```
+
 ## What we gonna learn
 
 - Typescript over Javascript
@@ -42,4 +62,17 @@
 
 ## References
 
+- [Volta](https://volta.sh)
+- [PNPM](https://pnpm.io)
+- [ViteJS](https://vitejs.dev)
+- [Typescript](https://www.typescriptlang.org/docs)
 - [ReactJS Roadmap](https://roadmap.sh/react)
+- [ReactJS Documentation](https://beta.reactjs.org)
+- [Axios](https://axios-http.com)
+- [React Query](https://tanstack.com/query/v4/docs/adapters/react-query)
+- [React Hook Form](https://react-hook-form.com)
+- [Zod](https://zod.dev)
+- [React Hook Form Resolvers](https://github.com/react-hook-form/resolvers)
+- [TailwindCSS](https://tailwindcss.com)
+- [Vitest](https://vitest.dev)
+- [Vercel](https://vercel.com)
