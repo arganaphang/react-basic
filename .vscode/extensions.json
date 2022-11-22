@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "christian-kohler.path-intellisense",
+    "rome.rome",
+    "bradlc.vscode-tailwindcss",
+    "gruntfuggly.todo-tree",
+    "catppuccin.catppuccin-vsc",
+    "esbenp.prettier-vscode"
+  ]
+}
