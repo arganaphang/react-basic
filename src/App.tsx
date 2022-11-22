@@ -1,35 +1,35 @@
-import { useState } from "react";
+import Profile from "~/components/Profile";
+
+const PERSONS = [
+  {
+    imgURL: "https://randomuser.me/api/portraits/men/86.jpg",
+    name: "John Doe",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, at?",
+    languages: ["English", "Indonesia", "France", "Japan"],
+  },
+  {
+    imgURL:
+      "https://images.unsplash.com/photo-1546539782-6fc531453083?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ",
+    name: "Emmilie Johnson",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, at?",
+    languages: ["English"],
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center">
-      <div className="flex gap-8 mb-8">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="w-24 h-24" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src="/react.svg" className="w-24 h-24" alt="React logo" />
-        </a>
-      </div>
-      <h1 className="mb-4">Vite + React</h1>
-      <div className="p-2 flex flex-col items-center gap-8">
-        <button
-          onClick={() => setCount((count) => count + 1)}
-          className="px-8 py-2 rounded-md bg-slate-200"
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit{" "}
-          <code className="px-4 py-2 rounded-md bg-slate-100">src/App.tsx</code>{" "}
-          and save to test HMR
-        </p>
-      </div>
-      <p className="text-slate-600">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="p-12 flex flex-wrap gap-8 justify-center items-center">
+      {PERSONS.map((person) => (
+        <Profile
+          key={person.name}
+          name={person.name}
+          imgURL={person.imgURL}
+          description={person.description}
+          languages={person.languages}
+        />
+      ))}
     </div>
   );
 }
