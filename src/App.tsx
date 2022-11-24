@@ -1,37 +1,88 @@
-import { useState } from "react";
+import React from "react";
+import Card from "~/components/Card";
 
-function App() {
-  const [count, setCount] = useState(0);
+type Todo = {
+  id: number;
+  title: string;
+  isDone: boolean;
+  createdAt: Date;
+};
+
+const App: React.FC = () => {
+  const [title, setTitle] = React.useState("");
+  const [todos, setTodos] = React.useState<Todo[]>([
+    {
+      id: 1,
+      title: "First Todo",
+      isDone: false,
+      createdAt: new Date(),
+    },
+  ]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // prevent to redirect to another page
+    e.preventDefault();
+    // add to todos state
+    setTodos((prev) => {
+      return [
+        ...prev,
+        { id: Date.now(), title: title, isDone: false, createdAt: new Date() },
+      ];
+    });
+    // clear input
+    setTitle("");
+  };
+
+  const handleToggle = (id: number) => {
+    setTodos(
+      todos.map((todo) => {
+        if (id === todo.id) {
+          todo.isDone = !todo.isDone;
+        }
+        return todo;
+      })
+    );
+  };
+
+  const handleDelete = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center">
-      <div className="flex gap-8 mb-8">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="w-24 h-24" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src="/react.svg" className="w-24 h-24" alt="React logo" />
-        </a>
-      </div>
-      <h1 className="mb-4">Vite + React</h1>
-      <div className="p-2 flex flex-col items-center gap-8">
-        <button
-          onClick={() => setCount((count) => count + 1)}
-          className="px-8 py-2 rounded-md bg-slate-200"
+    <div className="w-full min-h-screen grid place-content-center">
+      <div className="flex flex-col w-80 text-sm gap-4">
+        <form
+          className="flex bg-white rounded-md py-2 px-4 gap-4"
+          onSubmit={(e) => handleSubmit(e)}
         >
-          count is {count}
-        </button>
-        <p>
-          Edit{" "}
-          <code className="px-4 py-2 rounded-md bg-slate-100">src/App.tsx</code>{" "}
-          and save to test HMR
-        </p>
+          <input
+            type="text"
+            className="flex-1 bg-transparent outline-none"
+            placeholder="Add new todo"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="bg-slate-400 py-2 px-4 text-white rounded-sm text-xs cursor-pointer"
+          >
+            Add
+          </button>
+        </form>
+        <ul className="flex flex-col gap-2 h-80 overflow-auto">
+          {todos.map((todo) => (
+            <li key={todo.id}>
+              <Card
+                handleToggle={handleToggle}
+                handleDelete={handleDelete}
+                {...todo}
+              />
+            </li>
+          ))}
+        </ul>
       </div>
-      <p className="text-slate-600">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   );
-}
+};
 
 export default App;
