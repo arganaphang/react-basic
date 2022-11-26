@@ -35,7 +35,7 @@ $ pnpm run test
 
 ## What we gonna learn
 
-- Typescript over Javascript
+- Typescript over ~~Javascript~~
 - Git
 
 - What is ReactJS
