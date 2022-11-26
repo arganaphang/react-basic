@@ -1,35 +1,32 @@
 import React from "react";
 import Card from "~/components/Card";
-
-type Todo = {
-  id: number;
-  title: string;
-  isDone: boolean;
-  createdAt: Date;
-};
+import type { Todo } from "~/types/todo";
+import { getAllTodo } from "~/services/todo";
 
 const App: React.FC = () => {
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<Error | null>(null);
   const [title, setTitle] = React.useState("");
-  const [todos, setTodos] = React.useState<Todo[]>([
-    {
-      id: 1,
-      title: "First Todo",
-      isDone: false,
-      createdAt: new Date(),
-    },
-  ]);
+  const [todos, setTodos] = React.useState<Todo[]>([]);
+
+  React.useEffect(() => {
+    setLoading(true);
+    getAllTodo()
+      .then((todos) => {
+        setTodos(todos);
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+        setError(e);
+      });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // prevent to redirect to another page
     e.preventDefault();
-    // add to todos state
     setTodos((prev) => {
-      return [
-        ...prev,
-        { id: Date.now(), title: title, isDone: false, createdAt: new Date() },
-      ];
+      return [...prev, { id: Date.now(), title: title, completed: false }];
     });
-    // clear input
     setTitle("");
   };
 
@@ -37,7 +34,7 @@ const App: React.FC = () => {
     setTodos(
       todos.map((todo) => {
         if (id === todo.id) {
-          todo.isDone = !todo.isDone;
+          todo.completed = !todo.completed;
         }
         return todo;
       })
@@ -47,6 +44,22 @@ const App: React.FC = () => {
   const handleDelete = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
+
+  if (loading) {
+    return (
+      <div className="w-full min-h-screen grid place-content-center">
+        <p>Loading . . . </p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full min-h-screen grid place-content-center">
+        <p>Error {error.message}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full min-h-screen grid place-content-center">

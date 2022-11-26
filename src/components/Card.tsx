@@ -4,8 +4,7 @@ import { XCircleIcon } from "@heroicons/react/24/outline";
 type CardProps = {
   id: number;
   title: string;
-  isDone: boolean;
-  createdAt: Date;
+  completed: boolean;
   handleToggle: (id: number) => void;
   handleDelete: (id: number) => void;
 };
@@ -13,7 +12,7 @@ type CardProps = {
 const Card: React.FC<CardProps> = ({
   id,
   title,
-  isDone,
+  completed: isDone,
   handleToggle,
   handleDelete,
 }) => {
