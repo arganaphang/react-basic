@@ -2,50 +2,35 @@ import React from "react";
 import Card from "~/components/Card";
 import type { Todo } from "~/types/todo";
 import { getAllTodo } from "~/services/todo";
+import { useQuery } from "@tanstack/react-query";
 
 const App: React.FC = () => {
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [error, setError] = React.useState<Error | null>(null);
   const [title, setTitle] = React.useState("");
-  const [todos, setTodos] = React.useState<Todo[]>([]);
-
-  React.useEffect(() => {
-    setLoading(true);
-    getAllTodo()
-      .then((todos) => {
-        setTodos(todos);
-        setLoading(false);
-      })
-      .catch((e) => {
-        setLoading(false);
-        setError(e);
-      });
-  }, []);
+  const {
+    data: todos,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<Todo[], Error>({
+    queryKey: ["todos"],
+    queryFn: getAllTodo,
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTodos((prev) => {
-      return [...prev, { id: Date.now(), title: title, completed: false }];
-    });
+    console.log("Handle Submit");
     setTitle("");
   };
 
   const handleToggle = (id: number) => {
-    setTodos(
-      todos.map((todo) => {
-        if (id === todo.id) {
-          todo.completed = !todo.completed;
-        }
-        return todo;
-      })
-    );
+    console.log("Handle Toggle");
   };
 
   const handleDelete = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    console.log("Handle Delete");
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="w-full min-h-screen grid place-content-center">
         <p>Loading . . . </p>
@@ -53,7 +38,7 @@ const App: React.FC = () => {
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
       <div className="w-full min-h-screen grid place-content-center">
         <p>Error {error.message}</p>
