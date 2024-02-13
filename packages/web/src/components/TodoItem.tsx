@@ -1,21 +1,19 @@
 import React from "react";
 import { Todo } from "@/types";
-import { useDeleteTodo, useToggleTodo } from "@/service/todo-service";
 
 interface Props {
   todo: Todo;
+  onToggleTodo: ({ id }: { id: number }) => void;
+  onDeleteTodo: ({ id }: { id: number }) => void;
 }
 
-const TodoItem: React.FC<Props> = ({ todo }) => {
-  const toggleMutate = useToggleTodo();
-  const deleteMutate = useDeleteTodo();
-
-  const onToggleTodo = () => {
-    toggleMutate.mutate({ id: todo.id });
+const TodoItem: React.FC<Props> = ({ todo, onDeleteTodo, onToggleTodo }) => {
+  const onToggleTodoHandler = () => {
+    onToggleTodo({ id: todo.id });
   };
 
-  const onDeleteTodo = () => {
-    deleteMutate.mutate({ id: todo.id });
+  const onDeleteTodoHandler = () => {
+    onDeleteTodo({ id: todo.id });
   };
 
   return (
@@ -23,7 +21,7 @@ const TodoItem: React.FC<Props> = ({ todo }) => {
       <input
         type="checkbox"
         checked={todo.is_done}
-        onChange={onToggleTodo}
+        onChange={onToggleTodoHandler}
         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
       />
       <p
@@ -33,7 +31,7 @@ const TodoItem: React.FC<Props> = ({ todo }) => {
         {todo.title}
       </p>
       <button
-        onClick={onDeleteTodo}
+        onClick={onDeleteTodoHandler}
         className="w-8 h-8 rounded-md bg-red-200 text-red-600 transition-colors hover:bg-red-600 hover:text-red-100"
       >
         ✕

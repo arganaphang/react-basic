@@ -1,23 +1,16 @@
-import { useAddTodo } from "@/service/todo-service";
 import React, { useState } from "react";
 
-interface Props {}
+interface Props {
+  onAddTodo: ({ title }: { title: string }) => void;
+}
 
-const Form: React.FC<Props> = () => {
+const Form: React.FC<Props> = ({ onAddTodo }) => {
   const [title, setTitle] = useState("");
-
-  const mutate = useAddTodo();
 
   const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate.mutate(
-      { title: title },
-      {
-        onSuccess: () => {
-          setTitle("");
-        },
-      }
-    );
+    onAddTodo({ title });
+    setTitle("");
   };
 
   return (
