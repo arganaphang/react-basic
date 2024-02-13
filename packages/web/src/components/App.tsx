@@ -1,9 +1,10 @@
 import Form from "./Form";
 import TodoItem from "./TodoItem";
-import { useTodos } from "@/service/todo-service";
 
 const App: React.FC = () => {
-  const { data: todos, isLoading, isError } = useTodos();
+  // TODO: Update This
+  const isError = false;
+  const isLoading = false;
 
   if (isError) {
     return (
@@ -25,7 +26,7 @@ const App: React.FC = () => {
       <div className="h-96 w-[600px] flex flex-col">
         <Form />
         <ul className="mt-4 flex-1 overflow-y-auto flex flex-col gap-2">
-          {todos && todos.map((todo) => <TodoItem key={todo.id} todo={todo} />)}
+          <TodoItem todo={{ id: 1, title: "First Todo", is_done: false }} />
         </ul>
       </div>
     </div>

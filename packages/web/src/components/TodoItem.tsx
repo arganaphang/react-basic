@@ -1,21 +1,17 @@
 import React from "react";
 import { Todo } from "@/types";
-import { useDeleteTodo, useToggleTodo } from "@/service/todo-service";
 
 interface Props {
   todo: Todo;
 }
 
 const TodoItem: React.FC<Props> = ({ todo }) => {
-  const toggleMutate = useToggleTodo();
-  const deleteMutate = useDeleteTodo();
-
   const onToggleTodo = () => {
-    toggleMutate.mutate({ id: todo.id });
+    // TODO: Update This
   };
 
   const onDeleteTodo = () => {
-    deleteMutate.mutate({ id: todo.id });
+    // TODO: Update This
   };
 
   return (
